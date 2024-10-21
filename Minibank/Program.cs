@@ -39,43 +39,7 @@ namespace Minibank
                 }
             }
 
-
-
-
-            //foreach (User user in usersList)
-            //{
-
-            //    User userobj = new User(user.Name, user.Id);                
-            //    List<Account> userAccounts = new List<Account>();
-
-            //    foreach (Account account in accountList)
-            //    {
-            //        if (account.Customerid == user.Id)
-            //        {
-
-            //            Account accObj = new Account(account.Iban, account.Currency, account.Balance);
-
-            //            userAccounts.Add(accObj);
-            //        }
-            //    }
-            //       usersAndAccs[userobj] = userAccounts;     
-            //}
-
-
-
-            //foreach (var entry in usersAndAccs)
-            //{   
-            //    Console.WriteLine($"User: {entry.Key.Name}, Id: {entry.Key.Id}"); 
-
-            //    foreach (var account in entry.Value)
-            //    {
-            //        Console.WriteLine($"  Account Iban: {account.Iban}, Balance:{account.Balance}  {account.Currency}");
-            //    }
-            //}
-
-
-
-
+  
 
         }
     }
