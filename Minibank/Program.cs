@@ -11,37 +11,48 @@ namespace Minibank
             string[] customersInputCSV = File.ReadAllLines(@"../../../Customers.csv");
             string[] accountInputCSV = File.ReadAllLines(@"../../../Accounts.csv");
 
-            
+                    
             List<User> usersList = User.parseUsers(customersInputCSV);
             List<Account> accountList = Account.parseAccounts(accountInputCSV);
 
 
-            
-            foreach (var user in usersList)
-            {           
-                foreach (var acc in accountList)
-                {
-                    if (acc.Customerid == user.Id) 
-                    {
-                        user.accounts.Add(acc); 
-                    }
-                }
-            }
+            usersList=User.mapAccsAndUsers(usersList, accountList);
+            //User.showUsersAndAccs(usersList);
 
 
 
-            foreach (var user in usersList)
+            Console.WriteLine("For registration enter 1, to add a new account enter 2");
+            int choice = Convert.ToInt16(Console.ReadLine());
+            if (choice == 1)
             {
-                Console.WriteLine(user.ToString());
-                foreach (var account in user.accounts)
+                    User newUser = User.CreateNewUser(usersList);
+                    Account newAccount = Account.CreateNewAccount(accountList, newUser.Id);
+                    newUser.accounts.Add(newAccount);
+                
+
+            }
+
+            else if (choice == 2)
+            {
+                Console.WriteLine("Enter your identity number: ");
+                string identitynumber = Console.ReadLine();
+                User user = null;
+                foreach (var data in usersList)
                 {
-                    Console.WriteLine($"  Account info: {account.ToString()}");
+                    if (data.IdentityNumber == identitynumber)
+                    {
+                        user = data;
+
+                    }
+
                 }
+                Account newAcc = Account.CreateNewAccount(accountList, user.Id);
+                user.accounts.Add(newAcc);
             }
 
 
-            
-  
+
+            //User.showUsersAndAccs(usersList);
 
         }
     }

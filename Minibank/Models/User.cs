@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Minibank.Models
 {
-    //Id,Name,IdentityNumber,PhoneNumber,Email,Type
+    
     public class User
     {
         public int Id { get; set; }
@@ -29,7 +29,6 @@ namespace Minibank.Models
         }
 
 
-
         public User(int id, string name, string idnumber, string phone, string email, int type, Account acc)
         {
             Id= id;
@@ -42,9 +41,16 @@ namespace Minibank.Models
 
         }
 
+        public User() { }
+
         public override string ToString() 
         {
             return $"{Name}";
+        }
+        public string allData()
+        {
+            return $"{Name} {IdentityNumber} {PhoneNumber} {Email} " +
+                $"{accounts.Count}";
         }
 
         public static List<User> parseUsers(string[] input)
@@ -65,6 +71,71 @@ namespace Minibank.Models
             }
             return result;
         }
+
+        public string UserDataToCSV()
+        {
+            return $"{Id},{Name},{IdentityNumber},{PhoneNumber},{Email},{Type}";
+        }
+
+        public static List<User> mapAccsAndUsers(List<User> usersList, List<Account> accountList) 
+        {
+            foreach (var user in usersList)
+            {
+                foreach (var acc in accountList)
+                {
+                    if (acc.Customerid == user.Id)
+                    {
+                        user.accounts.Add(acc);
+                    }
+                }
+            }
+
+            return usersList;
+
+        }
+
+
+        public static void showUsersAndAccs(List<User> usersList)
+        {
+            foreach (var user in usersList)
+            {
+                Console.WriteLine(user.ToString());
+                foreach (var account in user.accounts)
+                {
+                    Console.WriteLine($"  Account info: {account.ToString()}");
+                }
+            }
+        }
+
+
+
+
+        public static User CreateNewUser(List<User> usersList)
+        {
+            int id = usersList.Count > 0 ? usersList[usersList.Count - 1].Id + 1 : 1;
+
+            Console.WriteLine("Enter your name and surname: ");
+            string name = Console.ReadLine();
+
+            Console.WriteLine("Enter your identity number: ");
+            string idnumber = Console.ReadLine();
+
+            Console.WriteLine("Enter your phone number: ");
+            string number = Console.ReadLine();
+
+            Console.WriteLine("Enter your email: ");
+            string email = Console.ReadLine();
+
+            Console.WriteLine("Enter account type (for physical 0/for LTD 1): ");
+            int type = Convert.ToInt16(Console.ReadLine());
+
+            User newUser = new User(id, name, idnumber, number, email, type);
+
+            File.AppendAllText(@"../../../Customers.csv", $"{newUser.UserDataToCSV()}{Environment.NewLine}");
+
+            return newUser;
+        }
+
 
 
 
