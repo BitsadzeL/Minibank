@@ -12,6 +12,7 @@ namespace Minibank
             string[] accountInputCSV = File.ReadAllLines(@"../../../Accounts.csv");
 
                     
+
             List<User> usersList = User.parseUsers(customersInputCSV);
             List<Account> accountList = Account.parseAccounts(accountInputCSV);
 
